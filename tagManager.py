@@ -2,24 +2,24 @@ import fileManager
 import logSet
 import logging
 
-logSet.enableLog()
-
-def inputTags(question=dict, tags=list):
+def inputTags(question=dict, tags=list, overwritte:bool=False):
     logging.info(" #### iniciating inputTags ###")
     questionsAndTags = fileManager.loadDataFrom("./questionsAndTags.yaml")
     logging.info("previous questionsAndTags:")
     logging.info(questionsAndTags)
 
+    # cases to ignore existing values
+    if question not in questionsAndTags or overwritte:
+        questionsAndTags[question] = tags
     #Add only new tags if question alerady exists
-    if question in questionsAndTags:
+    else:
         qt = questionsAndTags[question]
         for t in tags:
             if t in qt:
                 pass
             else:
                 questionsAndTags[question].append(t)
-    else:
-        questionsAndTags[question] = tags
+        
 
     
     logging.info("final questionsAndTags:")
@@ -33,7 +33,7 @@ def inputTags(question=dict, tags=list):
 
     return questionsAndTags
 
-inputTags(question="q54", tags=["Lambda", "CloudWatch"])
+inputTags(question="q54", tags=["Yeh! Science bitch!"])
 
 
 
