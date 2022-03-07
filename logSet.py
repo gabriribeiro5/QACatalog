@@ -12,5 +12,11 @@ def enableLog():
     # logFilePathAndName = os.path.join(os.environ['TAG_MANAGER_LOG_DIR'], fileName['logFile'])
     logFilePathAndName = "./tagManager.log"
 
-    logging.basicConfig(level=logging.DEBUG)
-    logging.FileHandler(filename=logFilePathAndName)
+    logging.basicConfig(filename=logFilePathAndName, level=logging.DEBUG)
+    # logging.FileHandler(filename=logFilePathAndName)
+
+    logging.debug('This message should go to the log file')
+    logging.info('So should this')
+    logging.warning('And this, too')
+    logging.error('And non-ASCII stuff, too, like Øresund and Malmö')
+
