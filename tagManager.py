@@ -6,14 +6,18 @@ logSet.enableLog()
 
 def inputTags(question=dict, tags=list):
     logging.info(" #### iniciating inputTags ###")
-    questionsAndTags = fileManager.loadDataFrom("./QuestionsAndTags.yaml")
+    questionsAndTags = fileManager.loadDataFrom("./questionsAndTags.yaml")
     logging.info("previous questionsAndTags:")
     logging.info(questionsAndTags)
 
+    #Add only new tags if question alerady exists
     if question in questionsAndTags:
-        # questionsAndTags[question].update(tags)
-        i = questionsAndTags.index(question)
-        questionsAndTags.remove(question)
+        qt = questionsAndTags[question]
+        for t in tags:
+            if t in qt:
+                pass
+            else:
+                questionsAndTags[question].append(t)
     else:
         questionsAndTags[question] = tags
 
@@ -21,9 +25,9 @@ def inputTags(question=dict, tags=list):
     logging.info("final questionsAndTags:")
     logging.info(questionsAndTags)
 
-    fileManager.updateFile(questionsAndTags, "./QuestionsAndTags.yaml")
+    fileManager.updateFile(questionsAndTags, "./questionsAndTags.yaml")
 
-    questionsAndTags = fileManager.loadDataFrom("./QuestionsAndTags.yaml")
+    questionsAndTags = fileManager.loadDataFrom("./questionsAndTags.yaml")
     logging.info("file looks like:")
     logging.info(questionsAndTags)
 
