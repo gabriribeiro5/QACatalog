@@ -1,4 +1,5 @@
 import yaml
+import logging
 
 # Recebe endereço e nome de qualquer arquivo Yaml e retorna os dados do  mesmo
 def loadDataFrom(filePathName):
@@ -6,9 +7,9 @@ def loadDataFrom(filePathName):
         filePathName: full path and name of the file to be loaded
         """
         with open(file=filePathName, mode='r', encoding='utf-8') as anyFile:
-            print(f"Loading data from {filePathName}")
+            logging.info(f"Loading data from {filePathName}")
             fileData = yaml.safe_load(anyFile)
-            print("Closing refered file")
+            logging.info("Closing refered file")
             anyFile.close()
             return fileData
 
@@ -19,5 +20,5 @@ def updateFile(newData, filePathName):
     filePathName: target file for data to be loaded
     """
     with open(file=filePathName, mode='w', encoding='utf-8') as anyFile:
-        print(f"Dumping data into target file")
+        logging.info(f"Dumping data into target file")
         yaml.dump(newData, anyFile)
