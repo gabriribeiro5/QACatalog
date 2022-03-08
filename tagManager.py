@@ -1,10 +1,7 @@
-from tomlkit import value
 import fileManager
 import logSet
 import logging
 import datetime
-
-logSet.enableLog()
 
 def inputTags(question=dict, tags=list, overwritte:bool=False):
     now = datetime.datetime.today()
