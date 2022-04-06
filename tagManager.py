@@ -1,4 +1,4 @@
-import fileManager
+import utils.fileManager as fileManager
 import logSet
 import logging
 import datetime
@@ -6,7 +6,7 @@ import datetime
 def inputTags(question=dict, tags=list, overwritte:bool=False):
     now = datetime.datetime.today()
     logging.info(f" \n {now} \n #### iniciating inputTags ####")
-    logging.warning(f"Overwritte mode: {overwritte} \n")
+    # logging.warning(f"Overwritte mode: {overwritte} \n")
 
     questionsAndTags = fileManager.loadDataFrom("./questionsAndTags.yaml")
 
@@ -28,10 +28,16 @@ def inputTags(question=dict, tags=list, overwritte:bool=False):
     logging.info("file updated")
     return questionsAndTags
 
-inputTags(question="q54", tags=["Yeh! Science bitch!"], overwritte=True)
 
-
-def findQuestions(tags={}):
+def findQuestions(tags:dict):
+    """Find all questions containing the given words
+    Response will be ordered by questions that have:
+    1. Exactly the same sequence of words
+    2. The given words in the same tag, no matter the sequence
+    3. The given words at any tag
+    4. Most of the given words
+    5. Any of the given words
+    """
     now = datetime.datetime.today()
     logging.info(f" \n {now} \n #### searching questions by tags ####")
 
@@ -44,6 +50,3 @@ def findQuestions(tags={}):
                 questionsList[k] = v
     
     return questionsList
-
-questionsList = findQuestions(tags=["Lambda", "CloudWatch"])
-print(f"questionsList: {questionsList}")
