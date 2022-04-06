@@ -3,17 +3,17 @@ import sys
 sys.path.append('.')
 
 # logging setup
-from scripts.log import fileManager
+import utils.fileManager as fileManager
 import os
 import logging
 
 import inspect
 
-def enableLog(dirName:str=None, appName:str="logfile"):
+def enableLog(dirName:str=".", logFileName:str="logfile"):
     """
 
-    dirName: glue-a, glue-b, lambda, murabei
-    appName: nome do arquivo atual ou aplicacao que estã ativando enableLog()
+    dirName: where must the lofile be saved?
+    logFileName: what is the logfile name (usually the application name)?
 
     """
 
@@ -21,18 +21,19 @@ def enableLog(dirName:str=None, appName:str="logfile"):
     # logFilePathAndName = os.path.join(os.environ['LOG_DIR'], fileName['logFile'])
 
     #remove .py from appName
-    if ".py" in appName:
-        appName = appName[0:(len(appName)-3)]
+    if ".py" in logFileName:
+        logFileName = logFileName[0:(len(logFileName)-3)]
 
 
-    logFilePathAndName = f"./{dirName}/{appName}.log"
-
-    logging.basicConfig(filename=logFilePathAndName,
+    logFilePathAndName = f"{dirName}/{logFileName}.log"
+    fileName = f"{logFileName}.log"
+    print(logFilePathAndName)
+    logging.basicConfig(filename=fileName,
                          format='%(levelname)s[%(asctime)s] - %(module)s: %(message)s',
                          datefmt='%Y/%m/%d %I:%M:%S %p',
                          filemode='a',
-                         level=logging.DEBUG)   
-
+                         level=logging.debug)
+    print("b")
     # New paragraph
     with open(logFilePathAndName, 'a') as l:
         # find the calling module
@@ -41,6 +42,11 @@ def enableLog(dirName:str=None, appName:str="logfile"):
         callingModule = inspect.getmodulename(mod.__file__)
 
         # append first line of the process
-        l.write(f"\n -- Logger enabled by {callingModule} --\n")
-    
-    logging.info(' This is a message from logSet \n ')
+        l.write(f"\n -- Logger enabled by {callingModule}.py --\n")
+
+    logging.debug('logging lib test for debug level is ok, running into info level')
+    logging.info('logging lib test for info level is ok, running into warining level')
+    print("c")
+    # logging.warning('logging lib test for warning level is ok, running into warning level')
+    # logging.error('logging lib test for error level is ok, running into critical level')
+    # logging.critical('logging lib test for critical level is ok, all levels have been tested')
