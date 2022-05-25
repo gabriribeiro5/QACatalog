@@ -1,0 +1,72 @@
+{
+    "columns": [
+            {
+                "name": "identitynumber",
+                "type": "long",
+                "size": 14,
+                "required": true
+            },
+            {
+                "name": "mail",
+                "type": "string",
+                "size": 100, 
+                "required": true
+            },
+            {
+                "name": "mailtype",
+                "type": "int",
+                "size": 1,
+                "required": true
+            },
+            {
+                "name": "mailcategory",
+                "type": "int",
+                "size": 1,
+                "required": true
+            },
+            {
+                "name": "mailstatus",
+                "type": "int",
+                "size": 1,
+                "required": false
+            },
+            {
+                "name": "notes",
+                "type": "string",
+                "size": 100,
+                "required": false
+            },
+            {
+                "name": "sourcemail",
+                "type": "string",
+                "size": 20,
+                "required": true
+            },
+            {
+                "name": "lastmodificationdate",
+                "type": "date",
+                "size": 10,
+                "required": true
+            },
+            {
+                "name": "processingdate",
+                "type": "date",
+                "size": 10,
+                "required": true
+            },
+            {
+                "name": "sourcedirection",
+                "type": "int",
+                "size": 1,
+                "required": true
+            },
+            {
+                "name": "sourcename",
+                "type": "string",
+                "size": 20,
+                "required": true
+            }
+
+    ]
+
+}

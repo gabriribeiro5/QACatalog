@@ -1,0 +1,106 @@
+{
+    "columns": [
+        {
+            "name": "originaltextmessageid",
+            "type": "int",
+            "size": 10,
+            "required": true
+        },
+        {
+            "name": "identitytypeid",
+            "type": "int",
+            "size": 1,
+            "required": false
+        },
+        {
+            "name": "identitynumber",
+            "type": "long",
+            "size": 14,
+            "required": true
+        },
+        {
+            "name": "identifierid",
+            "type": "int",
+            "size": 3,
+            "required": false
+        },
+        {
+            "name": "identifier",
+            "type": "string",
+            "size": 30,
+            "required":  false
+        },
+        {
+            "name": "area",
+            "type": "int",
+            "size": 2,
+            "required": true
+        },
+        {
+            "name": "number",
+            "type": "int",
+            "size": 9,
+            "required": true 
+        },
+        {
+            "name": "directionid",
+            "type": "string",
+            "size": 1,
+            "required":  true
+        },
+        {
+            "name": "channeltypeid",
+            "type": "int",
+            "size": 4,
+            "required": true
+        },
+        {
+            "name": "referencedate",
+            "type": "timestamp",
+            "size": 30,
+            "required": true
+        },
+        {
+            "name": "textmessagestatusid",
+            "type": "int",
+            "size": 4,
+            "required": true
+        },
+        {
+            "name": "errorid",
+            "type": "string",
+            "size": 30,
+            "required": false
+        },
+        {
+            "name": "notes",
+            "type": "string",
+            "size": 250,
+            "required": true 
+        },
+        {
+            "name": "objects",
+            "type": "json",
+            "size": null,
+            "required": false
+        },
+        {
+            "name": "filename",
+            "type": "string",
+            "size": 250,
+            "required": false
+        },
+        {
+            "name": "carrier",
+            "type": "string",
+            "size": 20,
+            "required": false
+        },
+        {
+            "name": "workflowtrackingid",
+            "type": "int",
+            "size": 8,
+            "required": false
+        }
+    ]
+}

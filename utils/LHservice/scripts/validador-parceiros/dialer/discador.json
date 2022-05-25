@@ -1,0 +1,130 @@
+{
+    "columns": [
+        {
+            "name": "originaldialingid",
+            "type": "int",
+            "size": 10,
+            "required": true
+        },
+        {
+            "name": "identitytypeid",
+            "type": "int",
+            "size": 1,
+            "required": false
+        },
+        {
+            "name": "identitynumber",
+            "type": "long",
+            "size": 14,
+            "required": true
+        },
+        {
+            "name": "identifierid",
+            "type": "int",
+            "size": 3,
+            "required": false
+        },
+        {
+            "name": "identifier",
+            "type": "string",
+            "size": 30,
+            "required": false
+        },
+        {
+            "name": "area",
+            "type": "int",
+            "size": 2,
+            "required": true
+        },
+        {
+            "name": "number",
+            "type": "int",
+            "size": 9,
+            "required": true
+        },
+        {
+            "name": "directionid",
+            "type": "int",
+            "size": 1,
+            "required": true
+        },
+        {
+            "name": "taskstarttime",
+            "type": "timestamp",
+            "size": 30,
+            "required": true
+        },
+        {
+            "name": "taskendtime",
+            "type": "timestamp",
+            "size": 30,
+            "required": true
+        },
+        {
+            "name": "dialingstatusid",
+            "type": "int",
+            "size": 4,
+            "required": true
+        },
+        {
+            "name": "voicestarttime",
+            "type": "timestamp",
+            "size": 30,
+            "required": false
+        },
+        {
+            "name": "calllegid",
+            "type": "int",
+            "size": 8,
+            "required": false
+        },
+        {
+            "name": "agentid",
+            "type": "int",
+            "size": 8,
+            "required": false
+        },
+        {
+            "name": "conversationstatusid",
+            "type": "int",
+            "size": 4,
+            "required": false
+        },
+        {
+            "name": "filename",
+            "type": "string",
+            "size": 250,
+            "required": false
+        },
+        {
+            "name": "speechtext",
+            "type": "json",
+            "size": null,
+            "required": false
+        },
+        {
+            "name": "journeyid",
+            "type": "string",
+            "size": 50,
+            "required": false
+        },
+        {
+            "name": "journey",
+            "type": "string",
+            "size": 3000,
+            "required": false
+        },
+        {
+            "name": "journeytyped",
+            "type": "string",
+            "size": 300,
+            "required": false
+        },
+        {
+            "name": "workflowtrackingid",
+            "type": "int",
+            "size": 8,
+            "required": false
+        }
+    ]
+}

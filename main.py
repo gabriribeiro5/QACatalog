@@ -2,7 +2,10 @@ from user_interface import talkToUser
 import logSet
 import logging
 
-logSet.enableLog(".", "tagmanager2")
+logSet.enableLog(".", "tagManager")
+print("d")
 logging.info(' ++++++++++++++++++++++++++++++++++ tagmanager initiated ++++++++++++++++++++++++++++++++++')
 
-talkToUser.start_talk()
+a = talkToUser.start_talk()
+a.mainMenu()
+print("e")

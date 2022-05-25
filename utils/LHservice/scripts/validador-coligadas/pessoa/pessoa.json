@@ -1,0 +1,42 @@
+{
+    "columns": [
+            {
+                "name": "identitynumber",
+                "type": "long",
+                "size": 14,
+                "required": true
+            },
+            {
+                "name": "mailstatus",
+                "type": "int",
+                "size": 1,
+                "required": false
+            },
+            {
+                "name": "lastmodificationdate",
+                "type": "date",
+                "size": 10,
+                "required": true
+            },
+            {
+                "name": "processingdate",
+                "type": "date",
+                "size": 10,
+                "required": true
+            },
+            {
+                "name": "sourcedirection",
+                "type": "int",
+                "size": 1,
+                "required": true
+            },
+            {
+                "name": "sourcename",
+                "type": "string",
+                "size": 20,
+                "required": true
+            }
+
+    ]
+
+}

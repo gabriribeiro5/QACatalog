@@ -1,12 +1,12 @@
 # Dealing with ImportError: attempted relative import with no known parent package
+import pdb
 import sys
 sys.path.append('.')
 
 # logging setup
-import utils.fileManager as fileManager
-import os
+# import utils.fileManager as fileManager
+# import os
 import logging
-
 import inspect
 
 def enableLog(dirName:str=".", logFileName:str="logfile"):
@@ -24,15 +24,33 @@ def enableLog(dirName:str=".", logFileName:str="logfile"):
     if ".py" in logFileName:
         logFileName = logFileName[0:(len(logFileName)-3)]
 
-
-    logFilePathAndName = f"{dirName}/{logFileName}.log"
+    print(logFileName)
+    pdb.set_trace()
     fileName = f"{logFileName}.log"
+    pdb.set_trace()
+    logging.basicConfig(filename="test.log", encoding='utf-8', level=logging.DEBUG)
+    logging.basicConfig(filename=fileName, encoding='utf-8', level=logging.DEBUG)
+    pdb.set_trace()
+    logging.debug('This message should go to the log file')
+    pdb.set_trace()
+    logging.info('So should this')
+    logging.warning('And this, too')
+    logging.error('And non-ASCII stuff, too, like Øresund and Malmö')
+
+    pdb.set_trace()
+    logFilePathAndName = f"{dirName}/{logFileName}.log"
+    pdb.set_trace()
+    fileName = f"{logFileName}.log"
+    pdb.set_trace()
     print(logFilePathAndName)
-    logging.basicConfig(filename=fileName,
+    logging.basicConfig(filename=logFilePathAndName,
                          format='%(levelname)s[%(asctime)s] - %(module)s: %(message)s',
                          datefmt='%Y/%m/%d %I:%M:%S %p',
                          filemode='a',
                          level=logging.debug)
+    pdb.set_trace()
+    logging.debug('logging lib test for debug level is ok, running into level')
+    logging.info('logging lib test for info level is ok, running into warining level')
     print("b")
     # New paragraph
     with open(logFilePathAndName, 'a') as l:
@@ -44,7 +62,7 @@ def enableLog(dirName:str=".", logFileName:str="logfile"):
         # append first line of the process
         l.write(f"\n -- Logger enabled by {callingModule}.py --\n")
 
-    logging.debug('logging lib test for debug level is ok, running into info level')
+    logging.debug('logging lib test for debug level is ok, running into level')
     logging.info('logging lib test for info level is ok, running into warining level')
     print("c")
     # logging.warning('logging lib test for warning level is ok, running into warning level')
