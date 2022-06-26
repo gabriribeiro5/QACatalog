@@ -1,5 +1,9 @@
+# Dealing with ImportError: attempted relative import with no known parent package
+import sys
+sys.path.append('.')
+
 from user_interface import talkToUser
-import logSet
+import utils.logSet as logSet
 import logging
 
 logSet.enableLog(".", "tagManager")

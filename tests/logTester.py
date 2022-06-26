@@ -2,7 +2,7 @@
 import sys
 sys.path.append('.')
 
-import logSet
+import utils.logSet as logSet
 import logging
 
 logSet.enableLog("tests", "logTester")

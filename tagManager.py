@@ -1,5 +1,5 @@
 import utils.fileManager as fileManager
-import logSet
+import utils.logSet as logSet
 import logging
 import datetime
 
