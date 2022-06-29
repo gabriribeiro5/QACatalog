@@ -8,10 +8,10 @@ import logging
 logSet.enableLog("logs", "QACatalog")
 
 # Aplication libs
-from user_interface import talkToUser
+from controller import activate
 
 appName = "QACatalog"
 logging.info(f' ++++++++++++++++++++++++++++++++++ {appName} INITIATED  ++++++++++++++++++++++++++++++++++')
 
-a = talkToUser.start_talk()
-a.mainMenu()
+#Activate Controller
+activate.Manager(appName)

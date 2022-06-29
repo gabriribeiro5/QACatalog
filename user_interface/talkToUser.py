@@ -1,10 +1,12 @@
-import tagManager
+import use_cases.tagManager as tagManager
 import utils.fileManager as fileManager
 import logging
 
 class start_talk(object):
-    def mainMenu(self):
+    def __init__(self):
         logging.info("Starting talk to user")
+
+    def mainMenu(self):
         menu = "\n ### MAIN MENU ### \n What task do you wish to perform? \n 1 = input new data \n 2 = search existing data by tag: \n Enter a number: "
         answer = input(menu)
         return answer
