@@ -5,7 +5,7 @@ sys.path.append('.')
 import utils.logSet as logSet
 import logging
 
-logSet.enableLog("logs", "logTester")
+logSet.enableLog("logs", "logTester.py")
 
 logging.debug('logTester starts here')
 logging.info('This message should go to the log file')

@@ -27,7 +27,7 @@ def enableLog(dirName:str="log", logFileName:str="logfile"):
 
     #remove .py from appName
     if ".py" in logFileName:
-        logFileName = logFileName[0:(len(logFileName)-3)]
+        logFileName = logFileName.split(".")[0]
 
     logFilePathAndName = f"{dirName}/{logFileName}.log"
         
