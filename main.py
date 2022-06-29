@@ -2,14 +2,16 @@
 import sys
 sys.path.append('.')
 
-from user_interface import talkToUser
+# Setup logging configuration
 import utils.logSet as logSet
 import logging
+logSet.enableLog("logs", "QACatalog")
 
-logSet.enableLog(".", "tagManager")
-print("d")
-logging.info(' ++++++++++++++++++++++++++++++++++ tagmanager initiated ++++++++++++++++++++++++++++++++++')
+# Aplication libs
+from user_interface import talkToUser
+
+appName = "QACatalog"
+logging.info(f' ++++++++++++++++++++++++++++++++++ {appName} INITIATED  ++++++++++++++++++++++++++++++++++')
 
 a = talkToUser.start_talk()
 a.mainMenu()
-print("e")

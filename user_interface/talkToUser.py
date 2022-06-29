@@ -3,10 +3,8 @@ import utils.fileManager as fileManager
 import logging
 
 class start_talk(object):
-    logging.info("Starting talk to user")
-    print("mainMenu()")
-
     def mainMenu(self):
+        logging.info("Starting talk to user")
         menu = "\n ### MAIN MENU ### \n What task do you wish to perform? \n 1 = input new data \n 2 = search existing data by tag: \n Enter a number: "
         answer = input(menu)
         return answer
