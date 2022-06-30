@@ -2,14 +2,14 @@
 import sys
 sys.path.append('.')
 
-import PyPDF2
+import fitz
 import logging
 
 class PDF_Master(object):
     def __init__(self):
         pass
 
-    def readFile(self, fileName:str=None, dirName:str="data"):
+    def getQuestions(self, fileName:str=None, dirName:str="data"):
         if fileName is None:
             response = "no file specified"
             return response
@@ -18,13 +18,38 @@ class PDF_Master(object):
             fileName = fileName.split(".")[0]
 
         pdf_file = f"{dirName}/{fileName}.pdf"
-        with open(pdf_file, "rb") as pdf_file:
-            logging.info("opening pdf file")
-            read_pdf = PyPDF2.PdfFileReader(pdf_file)
-            number_of_pages = read_pdf.getNumPages()
-            page = read_pdf.pages[5]
-            page_content = page.extractText()
-        print(page_content)
+
+        doc = fitz.open(pdf_file)
+        allQuestions = []
+        count = 0
+        for page in doc.pages(20, 23):
+            blocks = page.get_text("blocks") # all paragraphs
+            copy = False
+            question = []
+            refStart = '. Question'
+            refEnd = '1: '
+
+            for paragraph in blocks:
+                if copy:
+                    if refEnd not in paragraph[4]:
+                        question = f'{question} {paragraph[4]}'
+                    else:
+                        lastparagraph = paragraph[4].split('1:')[0]
+                        question = f'{question} {lastparagraph}'
+                    allQuestions.append(question)
+                
+                copy = False
+                if refStart in str(paragraph[4]):
+                    count += 1
+                    question = f'{count}. Question'
+                    copy = True
+                else:
+                    copy = False
+        doc.close()    
+        return allQuestions
+                
+                
 
 a = PDF_Master()
-a.readFile("AWS_CDA_Practice+Questions_DCT_2021")
+b = [a.getQuestions("AWS_CDA_Practice+Questions_DCT_2021")]
+print(b)

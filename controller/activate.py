@@ -13,7 +13,7 @@ class Manager(object):
         pass
 
     def extractPDFContent(self):
-        dataColector.PDF_Master.readFile("controller", "AWS_CDA_Practice+Questions_DCT_2021.pdf")
+        dataColector.PDF_Master.getQuestions("controller", "AWS_CDA_Practice+Questions_DCT_2021.pdf")
         pass
 
     def frameQuestions(self):
