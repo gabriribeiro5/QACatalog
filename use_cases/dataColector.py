@@ -1,15 +1,16 @@
 # Dealing with ImportError: attempted relative import with no known parent package
+import pdb
 import sys
 sys.path.append('.')
 
-import fitz
+import fitz #PyMuPDF
 import logging
 
 class PDF_Master(object):
     def __init__(self):
         pass
-
-    def getQuestions(self, fileName:str=None, dirName:str="data"):
+    
+    def openPDF(self, fileName:str=None, dirName:str="data"):
         if fileName is None:
             response = "no file specified"
             return response
@@ -20,9 +21,18 @@ class PDF_Master(object):
         pdf_file = f"{dirName}/{fileName}.pdf"
 
         doc = fitz.open(pdf_file)
+        print(type(doc.pages()))
+        return doc
+
+    def getQuestions(self, fileName:str=None, dirName:str="data"):
+        doc = self.openPDF(fileName)
+
         allQuestions = []
         count = 0
-        for page in doc.pages(20, 23):
+        print(type(doc.pages()))
+        for page in doc.pages():
+            if count == 0:
+                print(type(page))
             blocks = page.get_text("blocks") # all paragraphs
             copy = False
             question = []
@@ -52,4 +62,4 @@ class PDF_Master(object):
 
 a = PDF_Master()
 b = [a.getQuestions("AWS_CDA_Practice+Questions_DCT_2021")]
-print(b)
+# print(b)
