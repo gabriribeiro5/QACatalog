@@ -12,7 +12,7 @@ class test_dataColector(TestCase):
 
     def test_getQuestions_returns_first_question(self):    
         # define static values
-        expectedValue = "1. Question: A developer is planning to use a Lambda function to process incoming requests from an Application Load \nBalancer (ALB). How can this be achieved? \n"
+        expectedValue = "[page 2] 1. Question \n A developer is planning to use a Lambda function to process incoming requests from an Application Load \nBalancer (ALB). How can this be achieved? \n"
         errorMessage = "Returned value does not match the expected value"
 
         # get values from tested method
