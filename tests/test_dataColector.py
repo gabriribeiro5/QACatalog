@@ -7,8 +7,6 @@ from use_cases.dataColector import PDF_Master
 
 import unittest.main
 from unittest import TestCase
-from unittest.mock import MagicMock
-from unittest import mock
 
 class test_dataColector(TestCase):
 
