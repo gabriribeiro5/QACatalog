@@ -20,5 +20,5 @@ def updateFile(newData, filePathName):
     filePathName: target file for data to be loaded
     """
     with open(file=filePathName, mode='w', encoding='utf-8') as anyFile:
-        logging.info(f"Dumping data into target file")
+        logging.info(f"Dumping data into {filePathName}")
         yaml.dump(newData, anyFile)

@@ -2,14 +2,12 @@
 from imghdr import tests
 import pdb
 import sys
-
-from tomlkit import key
 sys.path.append('.')
 
-from utils import yamlManager
+import fitz #PyMuPDF
 import logging
 
-class PDF_Master(object):
+class Questions_Master(object):
     def __init__(self, fileName:str=None, dirName:str="data"):
         """
         fileName: give me a PDF name and I will handle it
@@ -25,12 +23,10 @@ class PDF_Master(object):
             fileName = fileName.split(".")[0]
 
         self.filePathName = f"{dirName}/{fileName}.pdf"
-        logging.info(f"Openning PDF (__init__): {self.filePathName}")
         self.doc = fitz.open(self.filePathName)
         
 
     def getQuestions(self):
-        logging.info("Searching PDF for questions")
         allQuestions = []
         pageCount = 0        
         
@@ -57,9 +53,7 @@ class PDF_Master(object):
                     copy = True
                 else:
                     copy = False
-
-        logging.info(f"Reading process completed. Total read pages: {pageCount}. Closing PDF {self.filePathName}")
-        self.doc.close()
+        self.doc.close()    
         return allQuestions
 
     def totalPages(self):
@@ -83,34 +77,3 @@ class PDF_Master(object):
         logging.info(f"saving new PDF: {newFilePathName}")
         newDoc.save(f"{newFilePathName}")
         
-class YAML_Master(object):
-    def __init__(self, fileName:str=None, dirName:str="data"):
-        """
-        fileName: give me a YAML name and I will handle it
-        dirName: primary source directory is /data, any other dir must be specified
-        """
-        logging.info("Starting class YAML Master")
-
-        if fileName is None:
-            response = "no file specified"
-            return response
-
-        extention = ".yaml" or ".yml"
-        if extention in fileName:
-            fileName = fileName.split(".")[0]
-
-        self.filePathName = f"{dirName}/{fileName}.yaml"
-        logging.info(f"Openning YAML (__init__): {self.filePathName}")
-        self.doc = yamlManager.loadDataFrom(self.filePathName)
-
-    def findOutBadge(self, sourceFileName):
-        self.badgesRef = self.doc["cloudBadges"]
-
-        for p in self.badgesRef:
-            provider = p[key] if p[key].lower in sourceFileName.lower else None
-        
-        for bdgNames in self.badgesRef[provider]:
-            possibleBadges = []
-            possibleBadges = [bdgNames[0] for name in bdgNames if name in sourceFileName else None]
-
-        return provider, possibleBadges

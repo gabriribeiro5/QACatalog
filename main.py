@@ -8,10 +8,12 @@ import logging
 logSet.enableLog("logs", "QACatalog")
 
 # Aplication libs
-from controller import activate
+from controller.activate import Manager_Work_Flow
+from utils import yamlManager
 
-appName = "QACatalog"
+configData = yamlManager.loadDataFrom("config.yaml")
+appName = configData["appName"]
 logging.info(f' ++++++++++++++++++++++++++++++++++ {appName} INITIATED  ++++++++++++++++++++++++++++++++++')
 
 #Activate Controller
-activate.Manager(appName)
+Manager_Work_Flow(configData)

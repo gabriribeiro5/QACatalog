@@ -1,0 +1,45 @@
+appName: QACatalog
+sourceDir: data/
+knownFiles:
+- 
+
+cloudBadges:
+- AWS:
+  - Cloud Practitioner
+  - Associate Developer
+  - Associate Solutions Architect
+  - Associate SysOps Administrator
+  - Professional Solutions Architect
+  - Professional DevOps Engineer
+  - Specialty Advanced Networking
+  - Specialty Data Analytics
+  - Specialty Databases
+  - Specialty Machine Learning
+  - Specialty Security
+  - Specialty SAP on AWS
+- Azure:
+  - Cloud Practitioner
+  - Associate Developer
+  - Associate Solutions Architect
+  - Associate SysOps Administrator
+  - Professional Solutions Architect
+  - Professional DevOps Engineer
+  - Specialty Advanced Networking
+  - Specialty Data Analytics
+  - Specialty Databases
+  - Specialty Machine Learning
+  - Specialty Security
+  - Specialty SAP on AWS
+GCP:
+  - Cloud Practitioner
+  - Associate Developer
+  - Associate Solutions Architect
+  - Associate SysOps Administrator
+  - Professional Solutions Architect
+  - Professional DevOps Engineer
+  - Specialty Advanced Networking
+  - Specialty Data Analytics
+  - Specialty Databases
+  - Specialty Machine Learning
+  - Specialty Security
+  - Specialty SAP on AWS
