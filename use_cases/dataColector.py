@@ -28,9 +28,10 @@ class PDF_Master(object):
 
     def getQuestions(self):
         allQuestions = []
-        count = 0
+        pageCount = 0        
         
         for page in self.doc.pages():
+            pageCount += 1
             blocks = page.get_text("blocks") # all paragraphs
             copy = False
             question = []
@@ -38,9 +39,9 @@ class PDF_Master(object):
             refEnd = '1: '
 
             for paragraph in blocks:
-                if copy:
+                if copy: 
                     if refEnd not in paragraph[4]:
-                        question = f'{question} {paragraph[4]}'
+                        question = f'{question}{paragraph[4]}'
                     else:
                         lastparagraph = paragraph[4].split('1:')[0]
                         question = f'{question} {lastparagraph}'
@@ -48,8 +49,7 @@ class PDF_Master(object):
                 
                 copy = False
                 if refStart in str(paragraph[4]):
-                    count += 1
-                    question = f'{paragraph[4][-13]}. Question:' # "-13" refers to the character where the question number is located
+                    question = f'[page {pageCount}] {paragraph[4]}' # "-13" refers to the character where the question number is located
                     copy = True
                 else:
                     copy = False
@@ -77,12 +77,3 @@ class PDF_Master(object):
         logging.info(f"saving new PDF: {newFilePathName}")
         newDoc.save(f"{newFilePathName}")
         
-
-simAWS = PDF_Master("source_test_dataColector", "tests")
-q = simAWS.getQuestions()
-print(q[0])
-
-# print(PDF_Master.__getattribute__)
-# print(simAWS.__init__.__code__)
-# print(PDF_Master.doc)
-# simAWS.newFile("tests/source_test_dataColector.pdf", 4, 7)
