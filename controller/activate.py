@@ -23,6 +23,9 @@ class Manager(object):
         # tagManager
         pass
 
+    def openUserCommunication(self):
+        pass
+
     def searchQuestion(self):
         pass
 
