@@ -1,4 +1,4 @@
-import utils.fileManager as fileManager
+import utils.yamlManager as yamlManager
 import utils.logSet as logSet
 import logging
 import datetime
@@ -8,7 +8,7 @@ def inputTags(question=dict, tags=list, overwritte:bool=False):
     logging.info(f" \n {now} \n #### iniciating inputTags ####")
     # logging.warning(f"Overwritte mode: {overwritte} \n")
 
-    questionsAndTags = fileManager.loadDataFrom("./questionsAndTags.yaml")
+    questionsAndTags = yamlManager.loadDataFrom("./questionsAndTags.yaml")
 
     # Cases to ignore existing values
     if question not in questionsAndTags or overwritte:
@@ -24,7 +24,7 @@ def inputTags(question=dict, tags=list, overwritte:bool=False):
             else:
                 questionsAndTags[question].append(t)
     
-    fileManager.updateFile(questionsAndTags, "./questionsAndTags.yaml")
+    yamlManager.updateFile(questionsAndTags, "./questionsAndTags.yaml")
     logging.info("file updated")
     return questionsAndTags
 
@@ -41,7 +41,7 @@ def findQuestions(tags:dict):
     now = datetime.datetime.today()
     logging.info(f" \n {now} \n #### searching questions by tags ####")
 
-    questionsAndTags = fileManager.loadDataFrom("./questionsAndTags.yaml")
+    questionsAndTags = yamlManager.loadDataFrom("./questionsAndTags.yaml")
     questionsList:dict = {}
 
     for t in tags:

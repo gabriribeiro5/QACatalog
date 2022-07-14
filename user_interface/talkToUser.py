@@ -1,5 +1,5 @@
 import use_cases.tagManager as tagManager
-import utils.fileManager as fileManager
+import utils.yamlManager as yamlManager
 import logging
 
 class start_talk(object):
@@ -18,7 +18,7 @@ class start_talk(object):
 
             i = input(">> Enter question number: ")
             q = f"q{i}"
-            questionsAndTags = fileManager.loadDataFrom("./questionsAndTags.yaml")
+            questionsAndTags = yamlManager.loadDataFrom("./questionsAndTags.yaml")
             # dealing with existing questions
             if q in questionsAndTags:
                 questionValue = questionsAndTags.items(q)
