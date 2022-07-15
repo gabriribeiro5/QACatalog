@@ -25,7 +25,7 @@ class Manager_Toolset(object):
         logging.info(f"Aplication name: {self.appName}")
         logging.info(f"Source dir: {self.dataDir}")
     
-    def hasNewData(self, dir:str = f"data/"):
+    def hasNewData(self):
         logging.info("Searching for new data files")
         
         hasNewData = False
@@ -86,6 +86,12 @@ class Manager_Toolset(object):
 
         yamlManager.updateFile(self.configData, "config.yaml")
 
+    def primaryUserCommunication(self):
+        logging.info("calling primary user interaction")
+        # do sth
+        
+        logging.info("end of primary user interaction")
+
     def allowUserRequests(self):
         pass
 
@@ -95,12 +101,24 @@ class Manager_Toolset(object):
 class Manager_Work_Flow(object):
     def __init__(self, configData):
         self.configData = configData
-        pass
+        self.tools = Manager_Toolset(self.configData)
 
     def checkForTasks(self):
         # Is there a user call? Initiate Talk. Do NOT allow search requests.
+        self.tools.primaryUserCommunication()
         # Are there new files to read?
-        # >> Y: notify user, start reading, fitDataToYaml, registerKnownFiles, updateConfigData
+        hasNewData = self.tools.hasNewData()
+        if hasNewData[0]:
+            # >> Y: notify user, start reading, fitDataToYaml, registerKnownFiles, updateConfigData
+            msg = f"New file(s) to read: {hasNewData[1]}"
+            self.tools.msgToUser(msg)
+            if self.configData["async"]:
+                msg = f"No problem. I can read while we talk."
+                self.tools.msgToUser(msg)
+            else:
+                msg = f"Please wait while I finish reading"
+                self.tools.msgToUser(msg)
+
         # >> N: allowUserRequests
         pass
 

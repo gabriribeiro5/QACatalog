@@ -1,5 +1,8 @@
 appName: QACatalog
 sourceDir: data/
+async: False
+
+
 knownFiles:
 - 
 
