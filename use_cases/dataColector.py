@@ -1,11 +1,9 @@
 # Dealing with ImportError: attempted relative import with no known parent package
-from imghdr import tests
-import pdb
 import sys
 
-from tomlkit import key
 sys.path.append('.')
 
+import fitz #PyMuPDF
 from utils import yamlManager
 import logging
 
@@ -107,10 +105,10 @@ class YAML_Master(object):
         self.badgesRef = self.doc["cloudBadges"]
 
         for p in self.badgesRef:
-            provider = p[key] if p[key].lower in sourceFileName.lower else None
+            provider = p.key if p.key.lower in sourceFileName.lower else None
         
         for bdgNames in self.badgesRef[provider]:
             possibleBadges = []
-            possibleBadges = [bdgNames[0] for name in bdgNames if name in sourceFileName else None]
+            possibleBadges = [bdgNames[0] for name in bdgNames if name in sourceFileName]
 
         return provider, possibleBadges

@@ -3,7 +3,7 @@ import sys
 
 sys.path.append('.')
 
-from use_cases.dataOrganizer import load_class
+from use_cases.dataOrganizer import Questions_Master
 
 import unittest.main
 from unittest import TestCase
