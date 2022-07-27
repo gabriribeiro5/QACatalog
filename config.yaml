@@ -1,7 +1,11 @@
 appName: QACatalog
-sourceDir: data/
+sourceDir: data/ #Where to extract raw data
 async: False
 
+searchSource: primaryLayer
+# > primaryLayer = data extraction source (PDF)
+# > secondLayer =  structured data endpoint (YAML)
+# > thirdLayer = high availability source (DATABASE)
 
 knownFiles:
 - 

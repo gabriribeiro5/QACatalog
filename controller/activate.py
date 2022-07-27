@@ -96,7 +96,18 @@ class Manager_Toolset(object):
         pass
 
     def searchQuestion(self):
-        pass
+        logging.info("search engine activated")
+        searchSource = self.configData["searchSource"]
+
+        if searchSource == "primarySource":
+            pass
+        elif searchSource == "yaml":
+            pass
+        elif searchSource == "database":
+
+        
+        logging.info("search engine is done")
+        
 
 class Manager_Work_Flow(object):
     def __init__(self, configData):
