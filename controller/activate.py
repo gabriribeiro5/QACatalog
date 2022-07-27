@@ -97,13 +97,18 @@ class Manager_Toolset(object):
 
     def searchQuestion(self):
         logging.info("search engine activated")
+        logging.info("getting search engine's source")
+        
         searchSource = self.configData["searchSource"]
-
-        if searchSource == "primarySource":
+        if searchSource == "primaryLayer": #PDF: data extraction source
             pass
-        elif searchSource == "yaml":
+        elif searchSource == "secondLayer": #YAML: structured data endpoint
             pass
-        elif searchSource == "database":
+        elif searchSource == "thirdLayer": #DATABASE: high availability source
+            pass
+        else:
+            msg = f"unrecognized layer: {searchSource}"
+            raise msg
 
         
         logging.info("search engine is done")
