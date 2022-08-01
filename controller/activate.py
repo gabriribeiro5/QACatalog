@@ -7,7 +7,7 @@ sys.path.append('.')
 import logging
 
 from user_interface import talkToUser
-from use_cases import tagManager, dataColector
+from use_cases import dataColector, searchEngine
 from utils import yamlManager
 
 
@@ -95,17 +95,26 @@ class Manager_Toolset(object):
     def allowUserRequests(self):
         pass
 
-    def searchQuestion(self):
-        logging.info("search engine activated")
-        logging.info("getting search engine's source")
-        
+    def searchQuestions(self, keywords):
+        logging.info("A search has been requested. Getting search engine's source (at config.yaml)")
         searchSource = self.configData["searchSource"]
+        logging.info(f"searchSource is: {searchSource}")
+        
         if searchSource == "primaryLayer": #PDF: data extraction source
-            pass
+            logging.info("Requesting allQuestions from PDF")
+            PDFContent = self.extractPDFContent() #file, allQuestions
+            file = PDFContent[0]
+            allQuestions = PDFContent[1]
+            logging.info(f"Target file: {file}")
+            search = searchEngine.Search_Class(keywords, allQuestions)
+            search.findMatches()
+            
         elif searchSource == "secondLayer": #YAML: structured data endpoint
-            pass
+            msg = f"cant work with this layer yet: {searchSource}"
+            raise msg
         elif searchSource == "thirdLayer": #DATABASE: high availability source
-            pass
+            msg = f"cant work with this layer yet: {searchSource}"
+            raise msg
         else:
             msg = f"unrecognized layer: {searchSource}"
             raise msg
