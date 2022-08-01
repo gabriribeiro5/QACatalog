@@ -16,7 +16,7 @@ class test_dataColector(TestCase):
         errorMessage = "Returned value does not match the expected value"
 
         # get values from tested method
-        source_test_doc = PDF_Master("source_test_dataColector", "tests")
+        source_test_doc = PDF_Master("test_source", "tests")
         questions = source_test_doc.getQuestions()
         returnedValue = questions[0]
 
