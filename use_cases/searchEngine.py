@@ -35,7 +35,6 @@ class Search_Class(object):
             questionIndex += 1 # starts at zero
             for keyword in self.keywords:
                 keyword = keyword.lower()
-                print(f"keyword '{keyword}'")
                 if keyword in q: # it's a match
                     if questionIndex not in allMatches:
                         allMatches[questionIndex]=[keyword] # add question to the list
@@ -46,17 +45,27 @@ class Search_Class(object):
         
         logging.info(f"Matching process completed. Returning {len(allMatches)} matches")
         
+        print(allMatches)
         return allMatches # dict {questionIndex: ['anyWord']}
         # REMEMBER: questionIndex starts at zero
     
     def rankMatches(self):
-        rank = self.findMatches()
-        
+        matches = self.findMatches()
+        refRank = {}
+        rankedMatches = {}
+
         # count matches | primary punctuation
-        for q in rank:
-            matchCount = 0
-            matchCount += [1 for w in q]
-            q = matchCount
+        for index in matches:
+            matchCount = len(matches[index])
+            refRank[index] = matchCount
+
+        print(f"unsorted rank: {refRank}")
 
         # rearenge matches by punctuation (lower -> higher)
-        rank = sorted(rank.items(), key=lambda item: item[1])
+        refRank = dict(sorted(refRank.items(), key=lambda item: item[1], reverse=True))
+        
+        for i in refRank:
+            rankedMatches[i]=matches[i]
+
+        print(f"final rank: {rankedMatches}")
+        return rankedMatches
