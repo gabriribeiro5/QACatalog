@@ -11,16 +11,22 @@ logSet.enableLog("logs", "QACatalog")
 from controller.activate import Manager_Work_Flow
 from utils import yamlManager
 
-try:
-    configData = yamlManager.loadDataFrom("config.yaml")
-    appName = configData["appName"]
-except:
-    msg = "Couldn't load config.yaml'"
-    raise(msg)
+def mainFunc():
+    try:
+        configData = yamlManager.loadDataFrom("config.yaml")
+        appName = configData["appName"]
+    except:
+        msg = "Couldn't load config.yaml'"
+        raise(msg)
 
-logging.info(f' ++++++++++++++++++++++++++++++++++ {appName} INITIATED  ++++++++++++++++++++++++++++++++++')
+    logging.info(f' ++++++++++++++++++++++++++++++++++ {appName} INITIATED  ++++++++++++++++++++++++++++++++++')
 
-#Activate Controller
-Manager_Work_Flow(configData)
+    #Activate Controller
+    manager = Manager_Work_Flow(configData)
+    manager.runTasks()
 
-logging.info(f' ---------------------------------- {appName} TERMINATED  ---------------------------------')
+    logging.info(f' ---------------------------------- {appName} TERMINATED  ---------------------------------')
+
+
+if __name__ == "__main__":
+    mainFunc()
