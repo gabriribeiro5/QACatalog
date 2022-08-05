@@ -6,10 +6,11 @@ sys.path.append('.')
 import logging
 
 class Search_Class(object):
-    def __init__(self, keywords:list=None, allQuestions:list=None):
+    def __init__(self, keywords:list=None, allQuestions:dict=None, questionsKeysList:list=None):
         """
         keywords: all reference words provided by the user when requesting a Search
         allQuestions: Set of questions captured from the searchSource described at config.yaml 
+        questionsKeysList: List of keys from allQuestionns with the same index as the dict allQuestions. Will be used to find the questions by index.
         """
         logging.info("Search Class initialized")
 
@@ -23,6 +24,7 @@ class Search_Class(object):
 
         self.keywords = keywords
         self.allQuestions = allQuestions
+        self.questionsKeysList = questionsKeysList
 
         
     def findMatches(self):
@@ -30,14 +32,14 @@ class Search_Class(object):
         allMatches = {}
         questionIndex = -1
 
-        for q in self.allQuestions:
-            q = q.lower()
+        for k in self.allQuestions:
+            question = self.allQuestions[k].lower()
             questionIndex += 1 # starts at zero
             for keyword in self.keywords:
                 keyword = keyword.lower()
-                if keyword in q: # it's a match
+                if keyword in question: # it's a match
                     if questionIndex not in allMatches:
-                        allMatches[questionIndex]=[keyword] # add question to the list
+                        allMatches[questionIndex]=[keyword] # add new question to the list
                     else:
                         allMatches[questionIndex].append(keyword) # add keyword to existing questions on the list
                 else:
@@ -45,7 +47,6 @@ class Search_Class(object):
         
         logging.info(f"Matching process completed. Returning {len(allMatches)} matches")
         
-        print(allMatches)
         return allMatches # dict {questionIndex: ['anyWord']}
         # REMEMBER: questionIndex starts at zero
     
@@ -59,13 +60,11 @@ class Search_Class(object):
             matchCount = len(matches[index])
             refRank[index] = matchCount
 
-        print(f"unsorted rank: {refRank}")
-
         # rearenge matches by punctuation (lower -> higher)
         refRank = dict(sorted(refRank.items(), key=lambda item: item[1], reverse=True))
         
-        for i in refRank:
-            rankedMatches[i]=matches[i]
+        for index in refRank:
+            qNumber = f"{self.questionsKeysList[index]}:"
+            rankedMatches[qNumber]=matches[index]
 
-        print(f"final rank: {rankedMatches}")
         return rankedMatches

@@ -1,14 +1,13 @@
 # Dealing with ImportError: attempted relative import with no known parent package
-from importlib.metadata import files
 import sys
-
-from tomlkit import key_value
 sys.path.append('.')
+
 import logging
 
 from user_interface import talkToUser
-from use_cases import dataColector, searchEngine
+from use_cases import dataColector, dataOrganizer, searchEngine
 from utils import yamlManager
+from glob import glob
 
 
 class Manager_Toolset(object):
@@ -17,50 +16,52 @@ class Manager_Toolset(object):
         appName: give me a PDF name and I will handle it
         dataDir: primary source directory is /data, any other dir must be specified
         """
-        logging.info("Manager initialized")
+        logging.info("Opening Manager Toolset")
         self.configData = configData
         self.appName = self.configData["appName"]
         self.dataDir = self.configData["sourceDir"]
-
-        logging.info(f"Aplication name: {self.appName}")
+        
         logging.info(f"Source dir: {self.dataDir}")
+
+    def listSourceFiles(self):
+        logging.info("Looking for PDF files at sourceDir")
+        filePattern = f"{self.dataDir}*.pdf"
+        allFilesPathName = glob(filePattern)
+        
+        return allFilesPathName
     
     def hasNewData(self):
         logging.info("Searching for new data files")
         
         hasNewData = False
-        knownFiles = [] #load from config.yaml
-        allFiles = [] #load .pdf from dataDir
-        self.newFiles = []
-
         knownFiles = self.configData["knownFiles"]
+        searchSource = self.configData["searchSource"]
+        allFilesPathName = self.listSourceFiles() #load .pdf from dataDir
+        self.newFilesPathName = []
 
-        for file in allFiles:
-            if file in knownFiles:
-                pass
-            else:
+        for file in allFilesPathName:
+            if file not in knownFiles or searchSource=="primaryLayer":
                 hasNewData = True
-                self.newFiles.append(file)
+                self.newFilesPathName.append(file)
+                
         
-        return hasNewData, self.newFiles
+        return hasNewData, self.newFilesPathName
 
     def extractPDFContent(self):
         hasNewData = self.hasNewData()
-        files = hasNewData[1]
+        allFilesPathName = hasNewData[1]
         newContent = {}
         badgesRef = self.configData["cloudBadges"]
-
         if hasNewData[0]:
             logging.info("Extracting new PDF content")
-            for file in files:
-                badge = dataColector.YAML_Master.findOutBadge(file)
-                allQuestions = dataColector.PDF_Master.getQuestions(file, self.dataDir)
-                key_value = file, allQuestions
-                newContent.append(key_value)
+            for filePathName in allFilesPathName:
+                pdf = dataColector.PDF_Master(filePathName)
+                allQuestions, questionsKeysList = pdf.getQuestions()
+                newContent[filePathName]=allQuestions # add new item to the dict
         else:
             logging.info("Nothing new to read")
             newContent = 0
-        return newContent
+        return newContent, questionsKeysList # questionsKeysList is to help finding questions by index
 
     def catalogTags(self):
         # tagManager
@@ -95,19 +96,24 @@ class Manager_Toolset(object):
     def allowUserRequests(self):
         pass
 
+    def msgToUser(self, msg):
+        pass
+
     def searchQuestions(self, keywords):
         logging.info("A search has been requested. Getting search engine's source (at config.yaml)")
         searchSource = self.configData["searchSource"]
         logging.info(f"searchSource is: {searchSource}")
         
         if searchSource == "primaryLayer": #PDF: data extraction source
-            logging.info("Requesting allQuestions from PDF")
-            PDFContent = self.extractPDFContent() #file, allQuestions
-            file = PDFContent[0]
-            allQuestions = PDFContent[1]
-            logging.info(f"Target file: {file}")
-            search = searchEngine.Search_Class(keywords, allQuestions)
-            search.findMatches()
+            logging.info("Requesting allQuestions from all PDF files in sourceDir")
+            filesAndQuestions, questionsKeysList = self.extractPDFContent() #files, allQuestions and KeyList to support finding questions by index
+            files = filesAndQuestions.keys()
+            for f in files:
+                allQuestions = filesAndQuestions.get(f)
+                logging.info(f"Running thru: {f}")
+                search = searchEngine.Search_Class(keywords, allQuestions, questionsKeysList)
+                rankMatches = search.rankMatches()
+                return rankMatches
             
         elif searchSource == "secondLayer": #YAML: structured data endpoint
             msg = f"cant work with this layer yet: {searchSource}"
@@ -125,10 +131,13 @@ class Manager_Toolset(object):
 
 class Manager_Work_Flow(object):
     def __init__(self, configData):
+        logging.info("Manager wake up")
         self.configData = configData
         self.tools = Manager_Toolset(self.configData)
+        logging.info("Manager ready to work")
 
-    def checkForTasks(self):
+    def runTasks(self):
+        logging.info("Starting tasks work flow")
         # Is there a user call? Initiate Talk. Do NOT allow search requests.
         self.tools.primaryUserCommunication()
         # Are there new files to read?
@@ -140,10 +149,17 @@ class Manager_Work_Flow(object):
             if self.configData["async"]:
                 msg = f"No problem. I can read while we talk."
                 self.tools.msgToUser(msg)
+                # allowUserRequests
             else:
                 msg = f"Please wait while I finish reading"
                 self.tools.msgToUser(msg)
 
         # >> N: allowUserRequests
         pass
+
+        # >> runUserRequests
+        words = ["lambda", "s3"]
+        questions = self.tools.searchQuestions(words)
+        print(f"questions: {questions}")
+        
 

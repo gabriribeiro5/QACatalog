@@ -6,6 +6,37 @@ sys.path.append('.')
 
 import fitz #PyMuPDF
 import logging
+from utils import yamlManager
+
+class YAML_Loader(object):
+    def __init__(self, fileName:str=None, dirName:str="data"):
+        """
+        fileName: give me a YAML name and I will handle it
+        dirName: primary source directory is /data, any other dir must be specified
+        """
+        logging.info("Starting class YAML Master")
+
+        if fileName is None:
+            response = "no file specified"
+            return response
+
+        extention = ".yaml" or ".yml"
+        if extention in fileName:
+            fileName = fileName.split(".")[0]
+
+        self.filePathName = f"{dirName}\{fileName}.yaml"
+        logging.info(f"Openning YAML: {self.filePathName}")
+        self.doc = yamlManager.loadDataFrom(fileName)
+
+    def findOutBadge(self, badgesRef):
+        for p in badgesRef:
+            provider = p.key if p.key.lower in self.filePathName.lower else None
+        
+        for bdgNames in badgesRef[provider]:
+            possibleBadges = []
+            possibleBadges = [bdgNames[0] for name in bdgNames if name in self.filePathName]
+
+        return provider, possibleBadges
 
 class Questions_Master(object):
     def __init__(self, fileName:str=None, dirName:str="data"):
