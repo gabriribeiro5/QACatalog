@@ -32,7 +32,7 @@ def enableLog(dirName:str="log", logFileName:str="logfile"):
     logFilePathAndName = f"{dirName}/{logFileName}.log"
         
     logging.basicConfig(filename=logFilePathAndName,
-                         format='%(levelname)s[%(asctime)s] - %(module)s: %(message)s',
+                         format='%(levelname)s[%(asctime)s] - %(module)s(lin:%(lineno)s) - %(funcName)s: %(message)s',
                          datefmt='%Y/%m/%d %I:%M:%S %p',
                          filemode='a',
                          level=logging.DEBUG)
